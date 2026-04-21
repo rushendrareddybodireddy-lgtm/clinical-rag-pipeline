@@ -2,6 +2,13 @@
 
 End-to-end clinical AI system that ingests real ICU patient data, computes hourly SOFA sepsis risk scores across 11,482 time windows, and uses Claude/GPT-4o to generate structured clinical assessments.
 
+
+## Dashboard
+
+![Grafana LLMOps Dashboard](docs/screenshots/grafana-dashboard.png)
+
+*Live monitoring: P95 latency by LLM provider, active sepsis alerts by risk tier, query rate, and embedding queue depth.*
+
 ## Stack
 - Apache Spark 3.5.3 + Delta Lake 3.2.0 (Bronze/Silver/Gold medallion)
 - FastAPI + pgvector (Postgres 16, HNSW indexing)
