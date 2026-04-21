@@ -45,3 +45,12 @@ Uses MIMIC-III Clinical Database Demo (PhysioNet). Do not commit CSV files.
 
 ## License
 MIT
+
+## Known Issues & TODOs
+
+- **NOTEEVENTS empty in demo**: The MIMIC-III demo dataset has no clinical notes, so pgvector embeddings and RAG retrieval run without supporting context. The full MIMIC-III dataset (requires PhysioNet credentialing) has 2M+ notes.
+- **First run is slow**: spark-submit downloads Delta Lake JARs (~200MB) on first run. Subsequent runs use the Ivy cache.
+- **Silver OOM on low memory**: If Docker has less than 6GB allocated, the silver transform will be killed during CHARTEVENTS processing. Fix: increase Docker memory in Settings > Resources.
+- **TODO**: Add unit tests for SOFA sub-score calculations
+- **TODO**: Load gold SOFA scores back into Postgres automatically via Airflow
+- **TODO**: Add patient timeline view to API response
