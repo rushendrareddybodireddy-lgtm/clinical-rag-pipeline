@@ -1,0 +1,40 @@
+# Clinical RAG Pipeline — Healthcare LLM + ICU Risk Scoring
+
+End-to-end clinical AI system that ingests real ICU patient data, computes hourly SOFA sepsis risk scores across 11,482 time windows, and uses Claude/GPT-4o to generate structured clinical assessments.
+
+## Stack
+- Apache Spark 3.5.3 + Delta Lake 3.2.0 (Bronze/Silver/Gold medallion)
+- FastAPI + pgvector (Postgres 16, HNSW indexing)
+- Claude claude-opus-4-6 / GPT-4o (switchable via config)
+- Apache Airflow 2.9.1 orchestration
+- Prometheus + Grafana LLMOps monitoring
+- Docker Compose (9 services)
+- MIMIC-III Clinical Database
+
+## Results on MIMIC-III Demo (100 patients)
+- 758,355 raw chart events ingested
+- 55,548 hourly vital sign windows
+- 11,482 SOFA-scored time windows
+- 6,317 critical-tier risk assessments (SOFA >= 13)
+
+## Quick Start
+```bash
+git clone https://github.com/YOUR_USERNAME/clinical-rag-pipeline
+cd clinical-rag-pipeline
+cp .env.example .env  # add your ANTHROPIC_API_KEY
+docker compose up -d
+```
+
+## Services
+| Service | URL |
+|---|---|
+| API Docs | http://localhost:8000/docs |
+| Grafana | http://localhost:3000 |
+| Airflow | http://localhost:8082 |
+| Spark UI | http://localhost:8080 |
+
+## Data
+Uses MIMIC-III Clinical Database Demo (PhysioNet). Do not commit CSV files.
+
+## License
+MIT

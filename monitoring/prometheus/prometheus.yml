@@ -1,0 +1,30 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+  external_labels:
+    project: 'clinical-rag'
+
+alerting:
+  alertmanagers: []   # wire up Alertmanager here if you want PagerDuty/Slack alerts
+
+rule_files: []
+
+scrape_configs:
+  # FastAPI RAG service
+  - job_name: 'clinical_api'
+    static_configs:
+      - targets: ['api:8000']
+    metrics_path: '/metrics'
+    scrape_interval: 15s
+
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Airflow — exposes StatsD metrics if you configure airflow.cfg [scheduler] statsd_on = True
+  # Uncomment after enabling StatsD in airflow.cfg
+  # - job_name: 'airflow'
+  #   static_configs:
+  #     - targets: ['airflow-webserver:8080']
+  #   metrics_path: '/admin/metrics'
